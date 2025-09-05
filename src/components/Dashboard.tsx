@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Users, Calendar, Activity, FileText, TrendingUp, Clock } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Users, Calendar, Activity, FileText, TrendingUp, Clock, LogOut } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
 import PatientsTab from "@/components/dashboard/PatientsTab";
 import AppointmentsTab from "@/components/dashboard/AppointmentsTab";
 import MedicalRecordsTab from "@/components/dashboard/MedicalRecordsTab";
 import ReportsTab from "@/components/dashboard/ReportsTab";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [stats, setStats] = useState({
     totalPatients: 0,
     todayAppointments: 0,
@@ -91,19 +94,43 @@ const Dashboard = () => {
     }
   ];
 
+  const handleSignOut = async () => {
+    try {
+      await supabase.auth.signOut();
+      navigate('/');
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
   return (
-    <div className="p-6 space-y-6">
+    <div className="min-h-screen bg-medical-light">
       {/* Header */}
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-          <p className="text-muted-foreground mt-1">Welcome to Wellness+ Clinic Management</p>
-        </div>
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Clock className="w-4 h-4" />
-          <span>Last updated: {new Date().toLocaleTimeString()}</span>
+      <div className="bg-gradient-to-r from-primary to-medical-blue text-white p-6">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <img 
+              src="/lovable-uploads/a3425d73-ed94-4bde-9268-945b5a7b8f2b.png" 
+              alt="Maranatha Medical Services" 
+              className="w-10 h-10"
+            />
+            <div>
+              <h1 className="text-2xl font-bold">Maranatha Medical Services</h1>
+              <p className="text-white/80">Patient Management Dashboard</p>
+            </div>
+          </div>
+          <Button 
+            variant="outline" 
+            onClick={handleSignOut}
+            className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+          >
+            <LogOut className="w-4 h-4 mr-2" />
+            Sign Out
+          </Button>
         </div>
       </div>
+
+      <div className="p-6 space-y-6">
 
       {/* Stats Grid */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -229,6 +256,7 @@ const Dashboard = () => {
           <ReportsTab />
         </TabsContent>
       </Tabs>
+      </div>
     </div>
   );
 };
