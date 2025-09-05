@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Calendar, Stethoscope, Heart } from "lucide-react";
+import { Users, Calendar, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Index = () => {
@@ -11,15 +11,15 @@ const Index = () => {
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative container mx-auto px-4 py-20">
           <div className="text-center text-white">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
-                <Stethoscope className="w-6 h-6" />
-              </div>
-              <h1 className="text-4xl md:text-6xl font-bold">Wellness+</h1>
+            <div className="flex flex-col items-center justify-center mb-6">
+              <img 
+                src="/lovable-uploads/a3425d73-ed94-4bde-9268-945b5a7b8f2b.png" 
+                alt="Maranatha Medical Services" 
+                className="w-32 h-32 mb-4"
+              />
+              <h1 className="text-4xl md:text-6xl font-bold">Maranatha Medical Services</h1>
+              <p className="text-xl md:text-2xl mt-2 text-white/90">Your Health, Our Heart</p>
             </div>
-            <p className="text-xl md:text-2xl mb-8 text-white/90 max-w-3xl mx-auto">
-              Modern Patient Management System for Private Clinics
-            </p>
             <p className="text-lg mb-10 text-white/80 max-w-2xl mx-auto">
               Streamline your clinic operations with our comprehensive patient registration and management platform
             </p>
@@ -149,13 +149,15 @@ const Index = () => {
       <footer className="bg-card border-t py-8">
         <div className="container mx-auto px-4 text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
-              <Stethoscope className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-semibold text-lg">Wellness+</span>
+            <img 
+              src="/lovable-uploads/a3425d73-ed94-4bde-9268-945b5a7b8f2b.png" 
+              alt="Maranatha Medical Services" 
+              className="w-8 h-8"
+            />
+            <span className="font-semibold text-lg">Maranatha Medical Services</span>
           </div>
           <p className="text-muted-foreground">
-            © 2025 Wellness+ Clinic Management System. All rights reserved.
+            © 2025 Maranatha Medical Services. All rights reserved.
           </p>
         </div>
       </footer>
