@@ -8,6 +8,7 @@ import DashboardPage from "./pages/DashboardPage";
 import PatientsPage from "./pages/PatientsPage";
 import AppointmentsPage from "./pages/AppointmentsPage";
 import RecordsPage from "./pages/RecordsPage";
+import ReportsPage from "./pages/ReportsPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -40,6 +41,11 @@ const App = () => (
           <Route path="/records" element={
             <ProtectedRoute>
               <RecordsPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/reports" element={
+            <ProtectedRoute>
+              <ReportsPage />
             </ProtectedRoute>
           } />
           <Route path="/register" element={
