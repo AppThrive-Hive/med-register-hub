@@ -13,6 +13,7 @@ import { NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import maranathaLogo from "@/assets/maranatha-logo.png";
 
 interface SidebarProps {
   className?: string;
@@ -66,10 +67,12 @@ const Sidebar = ({ className }: SidebarProps) => {
         <div className="flex items-center justify-between">
           {!isCollapsed && (
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-medical-blue rounded flex items-center justify-center">
-                <Users className="w-4 h-4 text-white" />
-              </div>
-              <span className="font-semibold text-lg">Wellness+</span>
+              <img 
+                src={maranathaLogo} 
+                alt="Maranatha Medical Services" 
+                className="w-8 h-8 object-contain"
+              />
+              <span className="font-semibold text-lg">Maranatha</span>
             </div>
           )}
           <Button
@@ -151,7 +154,7 @@ const Sidebar = ({ className }: SidebarProps) => {
         {!isCollapsed && (
           <div className="mt-4 pt-4 border-t border-border">
             <p className="text-xs text-muted-foreground">
-              © 2025 Wellness+ Clinic
+              © 2025 Maranatha Medical Services
             </p>
           </div>
         )}
