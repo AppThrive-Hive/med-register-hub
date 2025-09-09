@@ -7,13 +7,13 @@ import {
   Settings,
   UserPlus,
   LogOut,
-  Menu
+  Menu,
+  Heart
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import maranathaLogo from "@/assets/maranatha-logo.png";
 
 interface SidebarProps {
   className?: string;
@@ -67,12 +67,10 @@ const Sidebar = ({ className }: SidebarProps) => {
         <div className="flex items-center justify-between">
           {!isCollapsed && (
             <div className="flex items-center gap-2">
-              <img 
-                src={maranathaLogo} 
-                alt="Maranatha Medical Services" 
-                className="w-8 h-8 object-contain"
-              />
-              <span className="font-semibold text-lg">Maranatha</span>
+              <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-green-600 rounded-lg flex items-center justify-center">
+                <Heart className="w-4 h-4 text-white" />
+              </div>
+              <span className="font-semibold text-lg text-foreground">Maranatha</span>
             </div>
           )}
           <Button
