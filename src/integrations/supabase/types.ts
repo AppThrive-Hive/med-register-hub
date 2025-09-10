@@ -601,14 +601,46 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      can_access_patient_data: {
+        Args: { _patient_id: string }
+        Returns: boolean
+      }
       generate_patient_id: {
         Args: Record<PropertyKey, never>
         Returns: string
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
       }
     }
     Enums: {
@@ -617,6 +649,7 @@ export type Database = {
         | "Occasionally"
         | "Regularly"
         | "Heavily"
+      app_role: "admin" | "doctor" | "nurse" | "receptionist"
       appointment_status_type:
         | "Scheduled"
         | "Confirmed"
@@ -773,6 +806,7 @@ export const Constants = {
         "Regularly",
         "Heavily",
       ],
+      app_role: ["admin", "doctor", "nurse", "receptionist"],
       appointment_status_type: [
         "Scheduled",
         "Confirmed",
