@@ -12,7 +12,15 @@ import {
   TableRow 
 } from "@/components/ui/table";
 import { Search, Plus, FileText, Download } from "lucide-react";
+import { 
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
+import AddMedicalRecordForm from "@/components/forms/AddMedicalRecordForm";
 
 interface MedicalRecord {
   id: string;
@@ -33,6 +41,7 @@ const MedicalRecordsTab = () => {
   const [records, setRecords] = useState<MedicalRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [addRecordDialogOpen, setAddRecordDialogOpen] = useState(false);
 
   useEffect(() => {
     fetchMedicalRecords();
@@ -87,6 +96,11 @@ const MedicalRecordsTab = () => {
     }
   };
 
+  const handleAddRecordSuccess = () => {
+    setAddRecordDialogOpen(false);
+    fetchMedicalRecords();
+  };
+
   if (loading) {
     return (
       <Card>
@@ -113,7 +127,7 @@ const MedicalRecordsTab = () => {
                   className="pl-10 w-64"
                 />
               </div>
-              <Button>
+              <Button onClick={() => setAddRecordDialogOpen(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Add Record
               </Button>
@@ -190,6 +204,25 @@ const MedicalRecordsTab = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* Add Medical Record Dialog */}
+      <Dialog open={addRecordDialogOpen} onOpenChange={setAddRecordDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Plus className="h-5 w-5" />
+              Add New Medical Record
+            </DialogTitle>
+            <DialogDescription>
+              Add a new medical record for a patient
+            </DialogDescription>
+          </DialogHeader>
+          <AddMedicalRecordForm 
+            onSuccess={handleAddRecordSuccess}
+            onCancel={() => setAddRecordDialogOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

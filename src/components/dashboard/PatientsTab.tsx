@@ -29,6 +29,7 @@ import {
 import { Search, Plus, Edit, Eye, Phone, Mail, Calendar, MapPin, Filter } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import AddPatientForm from "@/components/forms/AddPatientForm";
 
 interface Patient {
   id: string;
@@ -55,6 +56,7 @@ const PatientsTab = () => {
   const [genderFilter, setGenderFilter] = useState<string>("all");
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [viewDialogOpen, setViewDialogOpen] = useState(false);
+  const [addPatientDialogOpen, setAddPatientDialogOpen] = useState(false);
 
   useEffect(() => {
     fetchPatients();
@@ -110,6 +112,11 @@ const PatientsTab = () => {
     toast.info(`Edit functionality for ${patient.first_name} ${patient.last_name} will be implemented soon.`);
   };
 
+  const handleAddPatientSuccess = () => {
+    setAddPatientDialogOpen(false);
+    fetchPatients();
+  };
+
   const formatPhoneNumber = (phone: string) => {
     const cleaned = phone.replace(/\D/g, '');
     const match = cleaned.match(/^(\d{1})(\d{3})(\d{3})(\d{4})$/);
@@ -161,7 +168,7 @@ const PatientsTab = () => {
                   <SelectItem value="female">Female</SelectItem>
                 </SelectContent>
               </Select>
-              <Button>
+              <Button onClick={() => setAddPatientDialogOpen(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Add Patient
               </Button>
@@ -388,6 +395,25 @@ const PatientsTab = () => {
               </div>
             </div>
           )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Add Patient Dialog */}
+      <Dialog open={addPatientDialogOpen} onOpenChange={setAddPatientDialogOpen}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Plus className="h-5 w-5" />
+              Add New Patient
+            </DialogTitle>
+            <DialogDescription>
+              Register a new patient in the system
+            </DialogDescription>
+          </DialogHeader>
+          <AddPatientForm 
+            onSuccess={handleAddPatientSuccess}
+            onCancel={() => setAddPatientDialogOpen(false)}
+          />
         </DialogContent>
       </Dialog>
     </div>

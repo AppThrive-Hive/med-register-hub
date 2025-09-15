@@ -12,7 +12,15 @@ import {
   TableRow 
 } from "@/components/ui/table";
 import { Search, Plus, Calendar, Clock } from "lucide-react";
+import { 
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
+import AddAppointmentForm from "@/components/forms/AddAppointmentForm";
 
 interface Appointment {
   id: string;
@@ -33,6 +41,7 @@ const AppointmentsTab = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [addAppointmentDialogOpen, setAddAppointmentDialogOpen] = useState(false);
 
   useEffect(() => {
     fetchAppointments();
@@ -96,6 +105,11 @@ const AppointmentsTab = () => {
     });
   };
 
+  const handleAddAppointmentSuccess = () => {
+    setAddAppointmentDialogOpen(false);
+    fetchAppointments();
+  };
+
   if (loading) {
     return (
       <Card>
@@ -122,7 +136,7 @@ const AppointmentsTab = () => {
                   className="pl-10 w-64"
                 />
               </div>
-              <Button>
+              <Button onClick={() => setAddAppointmentDialogOpen(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Schedule Appointment
               </Button>
@@ -205,6 +219,25 @@ const AppointmentsTab = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* Add Appointment Dialog */}
+      <Dialog open={addAppointmentDialogOpen} onOpenChange={setAddAppointmentDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Plus className="h-5 w-5" />
+              Schedule New Appointment
+            </DialogTitle>
+            <DialogDescription>
+              Schedule a new appointment for a patient
+            </DialogDescription>
+          </DialogHeader>
+          <AddAppointmentForm 
+            onSuccess={handleAddAppointmentSuccess}
+            onCancel={() => setAddAppointmentDialogOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
